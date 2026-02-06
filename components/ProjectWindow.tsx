@@ -13,6 +13,10 @@ export function ProjectWindow({
   isActive,
   shouldLoadIframe,
 }: ProjectWindowProps) {
+  const previewScale = 0.42;
+  const iframeWidth = `${100 / previewScale}%`;
+  const iframeHeight = `${100 / previewScale}%`;
+
   const handleClick = () => {
     window.open(project.url, '_blank', 'noopener,noreferrer');
   };
@@ -80,15 +84,18 @@ export function ProjectWindow({
         {/* Preview Area */}
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-50">
           {shouldLoadIframe ? (
-            <div className="h-full w-full overflow-auto">
+            <div className="relative h-full w-full overflow-hidden">
               <iframe
                 src={project.url}
-                className="pointer-events-none origin-top-left"
+                className="pointer-events-none absolute left-1/2 top-0 block border-0"
                 style={{
-                  width: '125%',
-                  height: '125%',
-                  transform: 'scale(0.8)',
+                  width: iframeWidth,
+                  height: iframeHeight,
+                  transform: `translateX(-50%) scale(${previewScale})`,
+                  transformOrigin: 'top center',
+                  overflow: 'hidden',
                 }}
+                scrolling="no"
                 title={`Preview of ${project.name}`}
                 loading={isActive ? 'eager' : 'lazy'}
                 sandbox="allow-same-origin allow-scripts allow-popups"

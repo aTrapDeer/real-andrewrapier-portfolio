@@ -33,6 +33,17 @@ body {
   color: #0b0f19;
 }
 
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 @keyframes grid-drift {
   0% {
     transform: translateY(0);
