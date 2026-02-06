@@ -194,7 +194,7 @@ export default function Home() {
               </p>
               <div className="flex gap-6">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/aTrapDeer"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-400 transition-colors hover:text-slate-600"
@@ -213,7 +213,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/arapier/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-400 transition-colors hover:text-slate-600"
@@ -228,11 +228,11 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://twitter.com"
+                  href="https://x.com/AndrewTrapier"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-400 transition-colors hover:text-slate-600"
-                  aria-label="Twitter"
+                  aria-label="X"
                 >
                   <svg
                     className="h-4 w-4"

@@ -80,13 +80,20 @@ export function ProjectWindow({
         {/* Preview Area */}
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-50">
           {shouldLoadIframe ? (
-            <iframe
-              src={project.url}
-              className="h-full w-full"
-              title={`Preview of ${project.name}`}
-              loading="eager"
-              sandbox="allow-same-origin allow-scripts allow-popups"
-            />
+            <div className="h-full w-full overflow-auto">
+              <iframe
+                src={project.url}
+                className="pointer-events-none origin-top-left"
+                style={{
+                  width: '125%',
+                  height: '125%',
+                  transform: 'scale(0.8)',
+                }}
+                title={`Preview of ${project.name}`}
+                loading={isActive ? 'eager' : 'lazy'}
+                sandbox="allow-same-origin allow-scripts allow-popups"
+              />
+            </div>
           ) : (
             <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
               <div className="rounded bg-neutral-100 px-3 py-1">

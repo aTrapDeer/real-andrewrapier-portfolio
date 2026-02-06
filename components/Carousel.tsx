@@ -9,11 +9,15 @@ const TRANSITION_DURATION = 1000;
 
 export function Carousel() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(true);
+  const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(() => {
+    if (typeof window === 'undefined') {
+      return true;
+    }
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
   const [isPaused, setIsPaused] = useState(false);
 
   const totalProjects = projects.length;
-  const anglePerItem = 360 / totalProjects;
 
   const goToNext = useCallback(() => {
     setActiveIndex((current) => (current + 1) % totalProjects);
@@ -54,7 +58,6 @@ export function Carousel() {
   // Respect prefers-reduced-motion
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsAutoplayEnabled(!mediaQuery.matches);
 
     const handleChange = (e: MediaQueryListEvent) => {
       setIsAutoplayEnabled(!e.matches);
@@ -67,14 +70,7 @@ export function Carousel() {
   // Calculate position for each card in the 3D ring
   const getCardStyle = (index: number) => {
     const relativeIndex = (index - activeIndex + totalProjects) % totalProjects;
-    const angle = relativeIndex * anglePerItem;
     const isActive = index === activeIndex;
-    const isSide =
-      relativeIndex === 1 ||
-      relativeIndex === totalProjects - 1 ||
-      relativeIndex === 2 ||
-      relativeIndex === totalProjects - 2;
-    const isBack = relativeIndex > 2 && relativeIndex < totalProjects - 2;
 
     // Calculate z-index based on position
     let zIndex = 1;
@@ -150,6 +146,9 @@ export function Carousel() {
           {projects.map((project, index) => {
             const isActive = index === activeIndex;
             const style = getCardStyle(index);
+            const relativeIndex = (index - activeIndex + totalProjects) % totalProjects;
+            const shouldLoadIframe =
+              relativeIndex <= 1 || relativeIndex >= totalProjects - 1;
 
             return (
               <div
@@ -161,7 +160,7 @@ export function Carousel() {
                 <ProjectWindow
                   project={project}
                   isActive={isActive}
-                  shouldLoadIframe={true}
+                  shouldLoadIframe={shouldLoadIframe}
                 />
               </div>
             );
